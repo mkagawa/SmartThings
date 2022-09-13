@@ -76,8 +76,6 @@ def off() {
 }
 
 import java.net.URI
-import java.io.IOException
-import java.lang.Exception
 def myParseDeviceAddress() {
       URI u = device.deviceNetworkId.toURI()
       def matched = (u.path =~ "(/api/public/\\d+/devices)/(\\d+)")[0]
@@ -135,10 +133,15 @@ def apiPut(int position) {
         log.error "something went wrong httpPut: $e"
     }    
 }
+def setLevel(int[] vals) {
+  log.info "setLevel(int[]) ${vals[0]}"
+  setLevel(vals[0])
+}
 def setLevel(double val) {
   setLevel((int)val)
 }
 def setLevel(int val){
+    if(val == null) val = 100;
     log.info "setLevel $val"
     def devInfo = apiGet()
     log.debug("dev: ${devInfo}")
